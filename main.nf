@@ -1,6 +1,16 @@
 #!/usr/bin/env nextflow
 
 
+
+/*
+################
+params
+################
+*/
+//NOTE: default parameter
+params.trimmed=true
+
+
 /*
 ################
 NEXTFLOW Global Config
@@ -8,7 +18,12 @@ NEXTFLOW Global Config
 */
 
 
-inputRawFilePattern = "./*_{R1,R2}.p.fastq.gz"
+inputUntrimmedRawFilePattern = "./*_{R1,R2}.fastq.gz"
+
+//NOTE: This pipeline is starts with `trimmed` because of the `p` in the file pattern.
+inputTrimmedRawFilePattern = "./*_{R1,R2}.p.fastq.gz"
+
+inputRawFilePattern = params.trimmed ? inputTrimmedRawFilePattern : inputUntrimmedRawFilePattern
 
 Channel.fromFilePairs(inputRawFilePattern, flat: true)
         .into { ch_in_gzip }
