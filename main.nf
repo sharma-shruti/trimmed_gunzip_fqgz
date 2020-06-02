@@ -37,7 +37,6 @@ gzip these files
 
 
 process gzip {
-    echo true
     container 'abhi18av/biodragao_base'
     publishDir 'results/gzip'
 
@@ -48,10 +47,12 @@ process gzip {
     tuple path(genome_1_fq), path(genome_2_fq) into ch_out_gzip
 
     script:
+    outputExtension = params.trimmed ? '.p.fastq' : '.fastq'
+    
     // rename the output files
     // G04880_R1.p.fastq.gz > G04880_R1.p.fastq
-    genome_1_fq = read_1_gz.name.split("\\.")[0] + '.p.fastq'
-    genome_2_fq = read_2_gz.name.split("\\.")[0] + '.p.fastq'
+    genome_1_fq = read_1_gz.name.split("\\.")[0] + outputExtension
+    genome_2_fq = read_2_gz.name.split("\\.")[0] + outputExtension
 
     """
     gzip -dc ${read_1_gz} > ${genome_1_fq} 
