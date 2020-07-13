@@ -1,13 +1,22 @@
 #!/usr/bin/env nextflow
 
-
+/*
+#######################
+Code documentation
+#######################
+1. Define a default parameter `params.trimmed=true`
+2. Check if the `inputRawFilePattern` is trimmed or untrimmed
+3. The `trimmed` file has `p` in the file pattern whereas untrimmed file does not have `p` in the file pattern
+4. Based on the file pattern the input parameter of the script is defined
+5. Execute the script to gunzip the input file using `gzip –dc` command and stores the output into the `publishDir`
+*/
 
 /*
 ################
 params
 ################
 */
-//NOTE: default parameter
+
 params.trimmed=true
 
 
@@ -20,7 +29,7 @@ NEXTFLOW Global Config
 
 inputUntrimmedRawFilePattern = "./*_{R1,R2}.fastq.gz"
 
-//NOTE: This pipeline is starts with `trimmed` because of the `p` in the file pattern.
+
 inputTrimmedRawFilePattern = "./*_{R1,R2}.p.fastq.gz"
 
 inputRawFilePattern = params.trimmed ? inputTrimmedRawFilePattern : inputUntrimmedRawFilePattern
@@ -49,8 +58,9 @@ process gzip {
     script:
     outputExtension = params.trimmed ? '.p.fastq' : '.fastq'
     
-    // rename the output files
-    // G04880_R1.p.fastq.gz > G04880_R1.p.fastq
+    /* rename the output files
+     XYZ.p.fastq.gz  XYZ.p.fastq
+     */
     genome_1_fq = read_1_gz.name.split("\\.")[0] + outputExtension
     genome_2_fq = read_2_gz.name.split("\\.")[0] + outputExtension
 
@@ -58,5 +68,5 @@ process gzip {
     gzip -dc ${read_1_gz} > ${genome_1_fq} 
     gzip -dc ${read_2_gz} > ${genome_2_fq}
     """
-//gzip -dc G04880_R1.p.fastq.gz > G04880_R1.p.fastq
+//gzip -dc XYZ_R1.p.fastq.gz > XYZ_R1.p.fastq
 }
