@@ -1,15 +1,13 @@
-# gunzip_fqgz_process
-
-## This repo is a wrapper for `gunzip` process.
+# Nextflow wrapper for `gunzip` process.
 
 ## Pre-requisites
 
 - Nextflow
 - Docker 
 
-If you plan to setup a basic server, then you can refer [minimal-nextflow-setup](https://github.com/nextflow-hub/minimal-nextflow-setup)
+**NOTE** If you plan to setup a basic server, then you can refer [minimal-nextflow-setup](https://github.com/nextflow-hub/minimal-nextflow-setup)
 
-## Execute this process by using the following command:
+## Usage
 
 ```
 nextflow run https://github.com/nextflow-hub/trimmed_gunzip_fqgz
