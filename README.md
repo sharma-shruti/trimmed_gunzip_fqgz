@@ -10,7 +10,7 @@
 ## Usage
 
 ```
-nextflow run https://github.com/nextflow-hub/trimmed_gunzip_fqgz
+nextflow run https://github.com/nextflow-hub/gunzip
 ```
 
 ## Options
@@ -20,7 +20,7 @@ nextflow run https://github.com/nextflow-hub/trimmed_gunzip_fqgz
 By default the pipeline assumes the files to follow the `*.p.fastq.gz` format. For untrimmed files i.e. `*.fastq.gz` pattern simply add the `trimmed` option as false.
 
 ```
-nextflow run https://github.com/nextflow-hub/trimmed_gunzip_fqgz --trimmed false
+nextflow run https://github.com/nextflow-hub/gunzip --trimmed false
 ```
 - `resultsDir`
 
