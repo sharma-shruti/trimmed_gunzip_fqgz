@@ -17,5 +17,15 @@ nextflow run https://github.com/nextflow-hub/trimmed_gunzip_fqgz
 
 You will see the execution of a `gzip` process.
 
+## Options
 
-**NOTE**: In this script, it stores the result files locally into `results/gzip` directory.
+- `trimmed` and `untrimmed` input files
+
+By default the pipeline assumes the files to follow the `*.p.fastq.gz` format. For untrimmed files i.e. `*.fastq.gz` pattern simply add the `trimmed` option as false.
+
+```
+nextflow run https://github.com/nextflow-hub/trimmed_gunzip_fqgz --trimmed false
+```
+
+
+**NOTE**: By default stores the result files locally into `results/gzip` directory.
