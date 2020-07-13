@@ -1,6 +1,6 @@
 # gunzip_fqgz_process
 
-## This nextflow wrapper helps to implement `gunzip` process of a `fastq` pipeline that includes:
+## This repo is a wrapper for `gunzip` process.
 
 ## Pre-requisites
 
