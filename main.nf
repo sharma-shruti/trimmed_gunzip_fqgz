@@ -18,7 +18,7 @@ params
 */
 
 params.trimmed=true
-
+params.saveBy = 'copy'
 
 /*
 ################
@@ -28,13 +28,11 @@ NEXTFLOW Global Config
 
 
 inputUntrimmedRawFilePattern = "./*_{R1,R2}.fastq.gz"
-
-
 inputTrimmedRawFilePattern = "./*_{R1,R2}.p.fastq.gz"
 
 inputRawFilePattern = params.trimmed ? inputTrimmedRawFilePattern : inputUntrimmedRawFilePattern
 
-Channel.fromFilePairs(inputRawFilePattern, flat: true)
+Channel.fromFilePairs(inputRawFilePattern)
         .into { ch_in_gzip }
 
 
@@ -47,10 +45,10 @@ gzip these files
 
 process gzip {
     container 'abhi18av/biodragao_base'
-    publishDir 'results/gzip'
+    publishDir 'results/gzip', mode: params.saveBy
 
     input:
-    tuple (genomeName, path(read_1_gz), path(read_2_gz)) from ch_in_gzip
+    set genomeFileName, file(genomeReads) from from ch_in_gzip
 
     output:
     tuple path(genome_1_fq), path(genome_2_fq) into ch_out_gzip
@@ -58,15 +56,13 @@ process gzip {
     script:
     outputExtension = params.trimmed ? '.p.fastq' : '.fastq'
     
-    /* rename the output files
-     XYZ.p.fastq.gz  XYZ.p.fastq
-     */
-    genome_1_fq = read_1_gz.name.split("\\.")[0] + outputExtension
-    genome_2_fq = read_2_gz.name.split("\\.")[0] + outputExtension
+    // rename the output files
+    genome_1_fq = genomeReads[0].name.split("\\.")[0] + outputExtension
+    genome_2_fq = genomeReads[1].name.split("\\.")[0] + outputExtension
 
     """
-    gzip -dc ${read_1_gz} > ${genome_1_fq} 
-    gzip -dc ${read_2_gz} > ${genome_2_fq}
+    gzip -dc ${genomeReads[0]} > ${genome_1_fq} 
+    gzip -dc ${genomeReads[1]} > ${genome_2_fq}
     """
-//gzip -dc XYZ_R1.p.fastq.gz > XYZ_R1.p.fastq
+
 }
