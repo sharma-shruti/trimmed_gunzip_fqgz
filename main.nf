@@ -48,7 +48,7 @@ process gzip {
     publishDir 'results/gzip', mode: params.saveBy
 
     input:
-    set genomeFileName, file(genomeReads) from from ch_in_gzip
+    set genomeFileName, file(genomeReads) from ch_in_gzip
 
     output:
     tuple path(genome_1_fq), path(genome_2_fq) into ch_out_gzip
