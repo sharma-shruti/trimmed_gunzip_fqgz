@@ -1,26 +1,31 @@
-# gunzip_fqgz_process
+# Nextflow wrapper for `gunzip` process.
 
-## This nextflow wrapper helps to implement `gunzip` process of a `fastq` pipeline that includes:
+## Pre-requisites
 
-1. Define a default parameter `params.trimmed=true`
-2. Check if the `inputRawFilePattern` is trimmed or untrimmed
-3. The `trimmed` file has `p` in the file pattern whereas untrimmed file does not have `p` in the file pattern
-4. Based on the file pattern the input parameter of the script is defined
-5. Execute the script to gunzip the input file using `gzip –dc` command and stores the output into the `publishDir`
+- Nextflow
+- Docker 
 
+**NOTE** If you plan to setup a basic server, then you can refer [minimal-nextflow-setup](https://github.com/nextflow-hub/minimal-nextflow-setup)
 
-## Execute the script by using the following command:
+## Usage
 
-```nextflow run main.nf```
+```
+nextflow run https://github.com/nextflow-hub/gunzip
+```
 
-You will see the execution of a `gzip` process.
+## Options
 
-## Execute it again adding the -resume option as shown below:
+- `trimmed` and `untrimmed` input files
 
-```nextflow run main.nf -resume```
+By default the pipeline assumes the files to follow the `*.p.fastq.gz` format. For untrimmed files i.e. `*.fastq.gz` pattern simply add the `trimmed` option as false.
 
-The -resume option skips the execution of any step that has been processed in a previous execution.
+```
+nextflow run https://github.com/nextflow-hub/gunzip --trimmed false
+```
+- `resultsDir`
 
-## Adding a publishDir directive to the gzip process to store the process results into a directory of your choice.
+**NOTE**: By default, it stores the result files locally into `results/gzip` directory.
 
-In this script, it stores the result files locally into `results/gzip` directory.
+## Contribution
+
+Contribution, in all forms, is most welcome!
